@@ -6,33 +6,125 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
-
+      if (profile.active === true) {
+        if (reason === undefined) {
+          return "confirm status manually"
+        } else {
+          profile.active = false
+          profile.reason = reason
+          return profile
+        }
+      } else {
+        profile.active = true
+        delete profile.reason
+        return profile
+      }
     }
 
-    // 👉 CHALLENGE 2
+    // 👉 CHALLENGE 2 
     function mineSweeper(grid, x, y) {
-
+      if (x>0 && x<4 && y>0 && y<4) {
+        if (grid[y-1][x-1] === "🟥") {
+          return "🟥 💀"
+        } else {
+          return "🟦 🥳"
+        }
+      } else {
+        return "invalid coordinates"
+      }
     }
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
-    }
+      // for (let key in obj) {
+      //   console.log("key: ", key)
+      //   console.log("value: ", obj[key])
+      // }
+      for (let key in obj) {
+        if (key.length >= 9) {
+          return "shorten all prop names to 9 chars or less"
+        } else if (obj[key] === 0) {
+          obj[key] = false
+        } else if (obj[key] === 1) {
+          obj[key] = true
+        } else if (obj[key] === null) {
+          delete obj[key]
+        }
+        }
+        return obj
+      }
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
-
+      const words = text.split(" ")
+      for (word in words) {
+        if (forbidden.includes(words[word])) {
+          let letters = words[word].split("")
+          for (letter in letters) {
+            letters[letter] = "x"
+          }
+          words[word] = letters.join("")
+        }
+      }
+      return words.join(" ")
     }
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
-
+      return `(${num.slice(0,3)}) ${num.slice(3,6)}-${num.slice(6)}`
     }
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
-    function diceRolls() {
+//     ### Function 
+// ```javascript
+// function diceRolls()
+// ```
 
+// #### Parameters
+// - The function does not take any arguments.
+
+// ## Requirements
+// 1. Simulate rolling a six-sided die.
+// 2. Continue rolling until three consecutive rolls result in a six.
+// 3. Return the total number of rolls it took to achieve three consecutive sixes.
+
+// ### Implementation Hints
+// - Utilize `Math.random` to simulate each die roll, ensuring it returns a number from 1 to 6. You can read about how `Math.random` works [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random).
+// - Implement a `while(true)` loop to roll the dice indefinitely.
+// - Keep track of the total number of rolls (`throws`) and the consecutive number of sixes (`counter`).
+// - Break out of the loop once three consecutive sixes are rolled to avoid an infinite loop.
+
+// ### Examples
+
+// #### Example
+// ```javascript
+// let result = diceRolls();
+// console.log(result);
+// ```
+// Expected Output:
+// - The output will be a number representing the total number of rolls it took to get three sixes in a row. This number will vary each time the function is run.
+
+// - Remember to avoid infinite loops by setting a proper condition to break out of the `while(true)` loop.
+    function diceRolls() {
+      const minCeiled = Math.ceil(1);
+      const maxFloored = Math.floor(7);
+      let diceRollValue =  Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+      let tripleSix = false
+      let rollCount = 0
+      let iFirst = 0
+      let iSecond = 0
+      let iThird = 0
+      while (tripleSix === false) {
+        rollCount++
+        iFirst =  Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+        iSecond =  Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+        iThird =  Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+        if (iFirst === 6 && iSecond === 6 && iThird === 6) {
+          return `you rolled triple 6's after ${rollCount} attempts`
+        }
+      }
     }
+    console.log(diceRolls())
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
